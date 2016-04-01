@@ -3,38 +3,50 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: [
-    './src/index.js',
-  ],
+  entry: {
+    react: [
+      './src/react/index.js',
+    ],
+    angular2: [
+      './src/angular2/main.ts',
+    ],
+  },
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel',
-    }],
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel',
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader',
+      },
+    ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx', '.ts', '.tsx'],
   },
   output: {
     path: __dirname + '/dist',
-    // path: 'dist',
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: '[name].js',
     hash: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
+      filename: 'react-index.html',
       title: 'React Todo App',
-      template: './src/index.ejs',
-      inject: 'body',
+      template: './src/react/index.ejs',
+      inject: false,
     }),
-    // new HtmlWebpackPlugin({
-    //   // filename: 'index1.html',
-    //   title: 'Angular 2 Todo App',
-    //   template: './src/index1.ejs',
-    //   inject: 'body',
-    // }),
+    new HtmlWebpackPlugin({
+      filename: 'angular2-index.html',
+      title: 'Angular 2 Todo App',
+      template: './src/angular2/index.ejs',
+      inject: false,
+    }),
   ],
   devServer: {
     contentBase: './dist',

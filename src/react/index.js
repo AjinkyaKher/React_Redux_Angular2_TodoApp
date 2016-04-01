@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import todoApp from './reducers';
 import App from './components/App';
+// import { addTodo } from './actions';
 
 const logger = store => next => action => {
   console.log('dispatching', action);
@@ -14,7 +15,7 @@ const logger = store => next => action => {
   return result;
 };
 
-const store = createStore(todoApp, { todos: [{ id: -1, text: 'Task 1', completed: false }], visibilityFilter: 'SHOW_ALL' }, compose(
+const store = createStore(todoApp, compose(
     applyMiddleware(logger),
     window.devToolsExtension ? window.devToolsExtension() : f => f
 ));
@@ -27,6 +28,3 @@ render(
 );
 
 // todos: [{ id: -1, text: 'Task 1', completed: false }], visibilityFilter: 'SHOW_ALL' }
-
-
-
